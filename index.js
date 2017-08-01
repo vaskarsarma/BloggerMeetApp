@@ -3,6 +3,7 @@ var app = express();
 var path = require("path");
 var exphbs = require("express-handlebars");
 var bodyparser = require("body-parser");
+var config = require("config");
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
@@ -19,6 +20,10 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.get('/', function(req, res) {
+    if (config.has('app.restAPIEndpoint.v1ContractPath')) {
+        console.log(config.get('app.restAPIEndpoint.v1ContractPath'));
+        console.log(config.get('app.restAPIEndpoint.v2ContractPath'));
+    }
     res.render('home', { layout: 'default', title: 'Home Page' });
 });
 
