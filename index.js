@@ -4,6 +4,7 @@ var path = require("path");
 var exphbs = require("express-handlebars");
 var bodyparser = require("body-parser");
 var config = require("config");
+var log = require("./modellayer/log");
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
@@ -20,10 +21,12 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.get('/', function(req, res) {
-    if (config.has('app.restAPIEndpoint.v1ContractPath')) {
-        console.log(config.get('app.restAPIEndpoint.v1ContractPath'));
-        console.log(config.get('app.restAPIEndpoint.v2ContractPath'));
-    }
+    //  if (config.has('app.restAPIEndpoint.v1ContractPath')) {
+    //         console.log(config.get('app.restAPIEndpoint.v1ContractPath'));
+    //         console.log(config.get('app.restAPIEndpoint.v2ContractPath'));
+    //     }
+    // log.error("error");
+    log.logger.info("info");
     res.render('home', { layout: 'default', title: 'Home Page' });
 });
 
