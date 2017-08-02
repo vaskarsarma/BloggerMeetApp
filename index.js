@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
     //         console.log(config.get('app.restAPIEndpoint.v1ContractPath'));
     //         console.log(config.get('app.restAPIEndpoint.v2ContractPath'));
     //     }
-    // log.error("error");
+    log.logger.error("error");
     log.logger.info("info");
     res.render('home', { layout: 'default', title: 'Home Page' });
 });

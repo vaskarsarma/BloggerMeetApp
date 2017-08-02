@@ -1,31 +1,35 @@
 'use strict'
-
 var bunyan = require('bunyan');
-const fs = require("fs");
+var fs = require("fs");
+var config = require("config");
 
 const logDir = 'logs';
-const env = process.env.NODE_ENV || 'development';
+//const env = process.env.NODE_ENV || 'development';
 
 // Create the log directory if it does not exist
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
+var errorFileName = "";
+var infoFileName = "";
+const tsFormat = "2017-01-01"; // () => (new Date()).toUTCString();
+if (config.has('logging.logFolderName')) {
+    errorFileName = config.get('logging.logFolderName') + tsFormat + "-" + config.get('logging.infoLogFileName') + ".log";
+    infoFileName = config.get('logging.logFolderName') + tsFormat + "-" + config.get('logging.errorLogFileName') + ".log";
+}
 
-
-var log = bunyan.createLogger({
+exports.logger = bunyan.createLogger({
     name: 'myapp',
     streams: [{
             level: 'info',
-            path: './logs/info.log' // log INFO and above to stdout 
+            path: infoFileName //'./logs/info.log' // log INFO and above to stdout 
         },
         {
             level: 'error',
             type: 'rotating-file',
-            path: './logs/foo.log',
+            path: errorFileName, //'./logs/foo.log',
             period: '1d', // daily rotation 
             count: 3
         }
     ]
 });
-
-exports.logger = log;
