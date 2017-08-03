@@ -38,6 +38,14 @@ app.get('/registrationTemplate', function(req, res) {
     res.render('registrationTemplate', { layout: 'default', title: 'Sign-up Page' });
 });
 
+app.use(function(req, res, next) {
+    res.render('404error', { layout: 'default', title: '404 Page' });
+});
+
+process.on('uncaughtException', function(err) {
+    log.logger.error(err);
+});
+
 var port = 2000;
 app.listen(port, function() {
     console.log("Server started at port " + port);
